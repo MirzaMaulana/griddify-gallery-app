@@ -28,9 +28,10 @@ export default function Login() {
                     value={data.email}
                     onChange={(e) => setData("email", e.target.value)}
                     placeholder="Email"
-                    className="mb-4 p-2 border rounded-md"
+                    className="mb-4 p-2 input input-bordered w-full"
                     required
                 />
+
                 <input
                     type="password"
                     name="password"
@@ -38,7 +39,7 @@ export default function Login() {
                     value={data.password}
                     onChange={(e) => setData("password", e.target.value)}
                     placeholder="Password"
-                    className="mb-4 p-2 border rounded-md"
+                    className="mb-4 p-2 input input-bordered w-full"
                     required
                 />
                 <button
