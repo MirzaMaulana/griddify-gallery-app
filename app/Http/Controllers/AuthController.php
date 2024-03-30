@@ -56,4 +56,10 @@ class AuthController extends Controller
         return redirect('/')
             ->withSuccess('You have successfully registered & logged in!');
     }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/login');
+    }
 }

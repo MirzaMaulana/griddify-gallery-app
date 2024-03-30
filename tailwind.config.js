@@ -2,7 +2,14 @@
 export default {
     content: ["./resources/**/*.jsx"],
     theme: {
-        extend: {},
+        extend: {
+            fontFamily: {
+                mont: ["Montserrat", "sans-serif"],
+            },
+        },
     },
     plugins: [require("daisyui")],
+    daisyui: {
+        themes: ["cupcake", "dark"],
+    },
 };
