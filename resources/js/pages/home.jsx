@@ -4,7 +4,8 @@ import Navbar from "../components/navbar";
 import Card from "../components/card";
 
 const Home = () => {
-    const { auth } = usePage().props;
+    const { auth, pictures } = usePage().props;
+    console.log(pictures);
     return (
         <main>
             <Navbar />
@@ -66,8 +67,13 @@ const Home = () => {
                         </select>
                     </div>
                 )}
-                <div className="grid gap-4 grid-cols-3 place-items-center mt-8">
-                    <Card />
+                <div className="grid gap-4 max-w-6xl mx-auto grid-cols-3 place-items-center mt-8">
+                    {pictures.data.map((item, index) => (
+                        <Card
+                            imageUrl={`/storage/${item.image}`}
+                            userId={item.user.name}
+                        />
+                    ))}
                 </div>
             </section>
         </main>

@@ -3,8 +3,9 @@ export default function Card({ imageUrl, userId, like, views }) {
         <div className="card w-[340px] bg-base-100">
             <figure className="rounded-md">
                 <img
-                    src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
+                    src={imageUrl}
                     alt="Shoes"
+                    className="object-cover  h-[222px] w-full"
                 />
             </figure>
             <div className="pt-3 flex justify-between items-center">
@@ -14,7 +15,7 @@ export default function Card({ imageUrl, userId, like, views }) {
                         alt="Tailwind CSS Navbar component"
                         src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
                     />
-                    Hendra Maulana
+                    {userId}
                 </div>
                 <div className="flex gap-2">
                     <span className="flex gap-1 text-sm items-center font-mont">

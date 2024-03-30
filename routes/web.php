@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PictureController;
+use App\Models\Picture;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +17,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return inertia('home');
+    $pictures = Picture::with('user')->orderBy('created_at', 'desc')->paginate(6);
+
+    return inertia('home', ['pictures' => $pictures]);
 });
 
 Route::controller(AuthController::class)->group(function () {
