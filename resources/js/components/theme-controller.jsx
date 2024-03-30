@@ -5,7 +5,7 @@ export default function ThemeController() {
             <input
                 type="checkbox"
                 className="theme-controller"
-                value="cupcake"
+                value="fantasy"
             />
 
             {/* sun icon */}
