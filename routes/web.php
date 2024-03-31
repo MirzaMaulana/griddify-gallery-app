@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PictureController;
+use App\Http\Controllers\ProfileController;
 use App\Models\Picture;
 use Illuminate\Support\Facades\Route;
 
@@ -31,3 +32,7 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 Route::resource('/picture', PictureController::class)->middleware(['auth']);
+
+Route::controller(ProfileController::class)->group(function () {
+    Route::get('/profile', 'index')->name('profile.index');
+});

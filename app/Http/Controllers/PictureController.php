@@ -34,14 +34,17 @@ class PictureController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg',
         ]);
 
-        $imagePath = $request->file('image')->store('images');
+        $image = $request->file('image');
+        $imageName = $image->getClientOriginalName();
+
+        $imagePath = $image->storeAs('public/images', $imageName);
 
         $user_id = auth()->user()->id;
 
         $picture = Picture::create([
             'title' => $request->title,
             'description' => $request->description,
-            'image' => $imagePath,
+            'image' => $imageName,
             'user_id' => $user_id,
             'views' => 0,
         ]);

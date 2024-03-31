@@ -70,7 +70,7 @@ const Home = () => {
                 <div className="grid gap-4 max-w-6xl mx-auto grid-cols-3 place-items-center mt-8">
                     {pictures.data.map((item, index) => (
                         <Card
-                            imageUrl={`/storage/${item.image}`}
+                            imageUrl={`/storage/images/${item.image}`}
                             userId={item.user.name}
                         />
                     ))}

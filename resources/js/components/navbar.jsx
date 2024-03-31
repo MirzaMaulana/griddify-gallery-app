@@ -36,7 +36,7 @@ const Navbar = () => {
                                 className="mt-6 z-[1] p-3 shadow menu menu-sm dropdown-content bg-neutral text-white gap-2 rounded-md w-60"
                             >
                                 <li>
-                                    <a>Profile</a>
+                                    <Link href="/profile">Profile</Link>
                                 </li>
                                 <li>
                                     <Link href="/picture/create">
