@@ -31,7 +31,8 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/register', 'registerIndex')->name('register');
 });
 
-Route::resource('/picture', PictureController::class)->middleware(['auth']);
+Route::resource('/picture', PictureController::class)->middleware(['auth'])->except(['show']);
+Route::get('/picture/{id}', [PictureController::class, 'show']);
 
 Route::controller(ProfileController::class)->group(function () {
     Route::get('/profile', 'index')->name('profile.index');

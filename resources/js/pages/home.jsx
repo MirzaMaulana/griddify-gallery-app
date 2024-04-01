@@ -11,7 +11,7 @@ const Home = () => {
             <Navbar />
             {!auth && (
                 <>
-                    <header className="text-center mt-16 h-[80vh]">
+                    <header className="text-center h-[85vh] flex flex-col justify-center items-center">
                         <div className="py-2 w-60 mb-6 bg-gray-300 text-black rounded-full font-semibold font-sans mx-auto">
                             One library, endless stories.
                         </div>
@@ -30,12 +30,12 @@ const Home = () => {
                             Get Started
                         </Link>
                     </header>
-                    <h1 className="text-4xl font-serif text-center">
+                    <h1 className="text-4xl mt-10 font-serif text-center">
                         Explore Inspiring
                     </h1>
                 </>
             )}
-            <section className="max-w-7xl mx-auto mt-4">
+            <section className="max-w-7xl mx-auto mt-5">
                 {auth && (
                     <div className="max-w-7xl px-10 mx-auto flex gap-3">
                         <label className="input input-secondary flex items-center gap-2 w-full">
@@ -72,6 +72,7 @@ const Home = () => {
                         <Card
                             imageUrl={`/storage/images/${item.image}`}
                             userId={item.user.name}
+                            id={item.id}
                         />
                     ))}
                 </div>

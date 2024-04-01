@@ -58,7 +58,9 @@ class PictureController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $picture = Picture::with('user')->findOrFail($id); // Mendapatkan data gambar berdasarkan ID
+
+        return inertia('picture/detail', ['picture' => $picture]);
     }
 
     /**

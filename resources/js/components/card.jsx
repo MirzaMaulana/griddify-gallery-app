@@ -1,13 +1,17 @@
-export default function Card({ imageUrl, userId, like, views }) {
+import { Link } from "@inertiajs/inertia-react";
+
+export default function Card({ imageUrl, userId, like, views, id }) {
     return (
         <div className="card w-[340px] bg-base-100">
-            <figure className="rounded-md">
-                <img
-                    src={imageUrl}
-                    alt="Shoes"
-                    className="object-cover  h-[222px] w-full"
-                />
-            </figure>
+            <Link href={`/picture/${id}`}>
+                <figure className="rounded-md">
+                    <img
+                        src={imageUrl}
+                        alt="Shoes"
+                        className="object-cover  h-[222px] w-full"
+                    />
+                </figure>
+            </Link>
             <div className="pt-3 flex justify-between items-center">
                 <div className="flex gap-2 font-mont items-center text-sm">
                     <img
