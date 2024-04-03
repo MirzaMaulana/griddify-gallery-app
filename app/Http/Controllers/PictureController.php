@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Picture;
 use Illuminate\Http\Request;
 
@@ -58,9 +59,10 @@ class PictureController extends Controller
      */
     public function show(string $id)
     {
-        $picture = Picture::with('user')->findOrFail($id); // Mendapatkan data gambar berdasarkan ID
+        $picture = Picture::with('user')->findOrFail($id); // get data picture by id
+        $comment = Comment::with('user')->where('picture_id', $id)->get();
 
-        return inertia('picture/detail', ['picture' => $picture]);
+        return inertia('picture/detail', ['picture' => $picture, 'comment' => $comment]);
     }
 
     /**

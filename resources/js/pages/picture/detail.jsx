@@ -5,13 +5,13 @@ import { Link } from "@inertiajs/inertia-react";
 import Comment from "../../components/comment";
 
 export default function DetailPicture() {
-    const { picture } = usePage().props;
+    const { picture, comment } = usePage().props;
 
     return (
         <>
             <Navbar />
-            <header className="max-w-6xl py-5 px-12 rounded-md mx-auto mt-5">
-                <Link href="/" className="flex gap-2 items-center">
+            <header className="max-w-6xl py-5 px-12 rounded-md mx-auto">
+                <Link href="/" className="flex gap-2 pb-5 items-center">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="1em"
@@ -81,9 +81,13 @@ export default function DetailPicture() {
                                         d="m15.113 3.21l.094.083l5.5 5.5a1 1 0 0 1-1.175 1.59l-3.172 3.171l-1.424 3.797a1 1 0 0 1-.158.277l-.07.08l-1.5 1.5a1 1 0 0 1-1.32.082l-.095-.083L9 16.415l-3.793 3.792a1 1 0 0 1-1.497-1.32l.083-.094L7.585 15l-2.792-2.793a1 1 0 0 1-.083-1.32l.083-.094l1.5-1.5a1 1 0 0 1 .258-.187l.098-.042l3.796-1.425l3.171-3.17a1 1 0 0 1 1.497-1.26z"
                                     />
                                 </svg>
-                                <button className="text-xs py-2 px-5 bg-secondary font-mont font-semibold text-white rounded-md ">
+                                <a
+                                    href={`/storage/images/${picture.image}`}
+                                    download
+                                    className="text-xs py-2 px-5 bg-secondary font-mont font-semibold text-white rounded-md "
+                                >
                                     Download
-                                </button>
+                                </a>
                             </div>
                         </div>
 
@@ -93,7 +97,7 @@ export default function DetailPicture() {
                         <p className="mt-2">{picture.description}</p>
                     </div>
                     <div>
-                        <Comment />
+                        <Comment pictureId={picture.id} comment={comment} />
                     </div>
                 </section>
             </header>

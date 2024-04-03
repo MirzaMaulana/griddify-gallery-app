@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { useForm } from "@inertiajs/inertia-react";
+import { useForm, usePage } from "@inertiajs/inertia-react";
 
-export default function Comment() {
+export default function Comment({ pictureId, comment }) {
     const { data, setData, post, processing, errors } = useForm({
+        picture_id: pictureId,
         content: "",
     });
+
+    const { auth } = usePage().props;
+
     const [showSubmit, setShowSubmit] = useState(false);
 
     const handleChange = (e) => {
@@ -15,7 +19,7 @@ export default function Comment() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post("/submit-comment", {
+        post("/comment", {
             onSuccess: () => {
                 setData("content", ""); // Clear input after successful submission
                 setShowSubmit(false); // Hide submit button again
@@ -27,27 +31,34 @@ export default function Comment() {
         <section className="w-full">
             <p className="text-lg font-mont font-semibold">Komentar</p>
             <div className="h-96 overflow-auto">
-                <div className="flex gap-3 mt-3">
-                    <img
-                        src="https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg"
-                        className="w-8 h-8 rounded-full"
-                        alt=""
-                    />
-                    <div className="">
-                        <p className="font-mont text-sm">
-                            <span className="font-semibold me-3">UserName</span>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing
-                            elit. Dignissimos, explicabo omnis iure dolorum
-                            doloribus rerum!
-                        </p>
+                {comment.map((item, index) => (
+                    <div className="flex gap-3 mt-4" key={index}>
+                        <img
+                            src="https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg"
+                            className="w-8 h-8 rounded-full"
+                            alt=""
+                        />
+                        <div className="">
+                            <p className="font-mont text-sm">
+                                <span className="font-semibold me-3">
+                                    {item.user.name}
+                                </span>
+                                {item.content}
+                            </p>
+                        </div>
                     </div>
-                </div>
+                ))}
             </div>
-            <form onSubmit={handleSubmit} className="my-2 flex gap-3">
+            <form
+                onSubmit={handleSubmit}
+                action="/comment"
+                className="my-2 flex gap-3"
+            >
                 <input
                     type="text"
                     name="content"
                     required
+                    disabled={!auth}
                     placeholder="Type here for comment"
                     className="input input-secondary w-full"
                     value={data.content}

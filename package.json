@@ -1,4 +1,6 @@
 {
+    "name": "griddify_gallery_app",
+    "author": "Mirzaa",
     "private": true,
     "type": "module",
     "scripts": {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Picture;
@@ -34,6 +35,10 @@ Route::controller(AuthController::class)->group(function () {
 Route::resource('/picture', PictureController::class)->middleware(['auth'])->except(['show']);
 Route::get('/picture/{id}', [PictureController::class, 'show']);
 
-Route::controller(ProfileController::class)->group(function () {
+Route::controller(CommentController::class)->middleware('auth')->group(function () {
+    Route::post('/comment', 'store')->name('comment.store');
+});
+
+Route::controller(ProfileController::class)->middleware('auth')->group(function () {
     Route::get('/profile', 'index')->name('profile.index');
 });
