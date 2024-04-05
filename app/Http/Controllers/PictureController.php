@@ -87,7 +87,7 @@ class PictureController extends Controller
      */
     public function destroy(Picture $picture)
     {
-        $path = public_path('storage/posts/' . $picture->image);
+        $path = public_path('storage/images/' . $picture->image);
         if (File::exists($path)) {
             File::delete($path);
         }
