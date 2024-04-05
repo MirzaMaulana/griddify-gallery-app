@@ -22,4 +22,14 @@ class Picture extends Model
         'image' => '',
         'views' => '0',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($picture) {
+            // Delete related comments
+            Comment::where('picture_id', $picture->id)->delete();
+        });
+    }
 }

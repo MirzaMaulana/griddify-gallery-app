@@ -13,7 +13,9 @@ const Navbar = () => {
         <>
             <nav className="navbar py-5 px-6 font-mont max-w-7xl mx-auto">
                 <div className="flex-1 navbar-start">
-                    <h3 className="text-3xl font-semibold">Griddify</h3>
+                    <Link href="/">
+                        <h3 className="text-3xl font-semibold">Griddify</h3>
+                    </Link>
                 </div>
                 <div className="flex-none gap-2 navbar-end">
                     <ThemeController />

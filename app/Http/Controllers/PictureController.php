@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Picture;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class PictureController extends Controller
 {
@@ -84,8 +85,15 @@ class PictureController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Picture $picture)
     {
-        //
+        $path = public_path('storage/posts/' . $picture->image);
+        if (File::exists($path)) {
+            File::delete($path);
+        }
+
+        $picture->delete();
+
+        return redirect()->back()->withSuccess('You have successfully deleted the image');
     }
 }

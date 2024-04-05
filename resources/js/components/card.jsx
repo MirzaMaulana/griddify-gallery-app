@@ -2,7 +2,7 @@ import { Link } from "@inertiajs/inertia-react";
 
 export default function Card({ imageUrl, userId, like, views, id }) {
     return (
-        <div className="card w-[340px] bg-base-100">
+        <div className="card mb-3 w-[340px] bg-base-100">
             <Link href={`/picture/${id}`}>
                 <figure className="rounded-md">
                     <img
