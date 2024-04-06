@@ -3,6 +3,15 @@ import { Inertia } from "@inertiajs/inertia";
 import { useState } from "react"; // Import useState hook
 
 export default function Card({ id, image, title }) {
+    const maxTitleLength = 25; // Set the maximum length of the title
+
+    const shortenTitle = (title) => {
+        if (title.length > maxTitleLength) {
+            return title.substring(0, maxTitleLength) + "..."; // Return shortened title
+        }
+        return title; // Return full title if it's within the limit
+    };
+
     const handleDeleted = (e) => {
         e.preventDefault();
         Inertia.delete(`/picture/${id}`, {
@@ -48,7 +57,7 @@ export default function Card({ id, image, title }) {
                 />
             </figure>
             <div className="pt-3 flex justify-between items-center">
-                <p className="font-semibold font-mont">{title}</p>
+                <p className="font-semibold font-mont">{shortenTitle(title)}</p>
                 <div className="dropdown dropdown-bottom dropdown-end font-mont">
                     <div tabIndex={0} role="button" className="">
                         <svg
