@@ -1,16 +1,16 @@
 import { usePage } from "@inertiajs/inertia-react";
 import Navbar from "../../components/navbar";
-import PaddingContainer from "../../components/padding-container";
+import Card from "../../components/card";
 import { Link } from "@inertiajs/inertia-react";
 import Comment from "../../components/comment";
 
 export default function DetailPicture() {
-    const { picture, comment } = usePage().props;
+    const { picture, comment, more_picture } = usePage().props;
 
     return (
         <>
             <Navbar />
-            <header className="max-w-6xl py-5 px-12 rounded-md mx-auto">
+            <header className="max-w-6xl pt-5 pb-14 px-12 rounded-md mx-auto">
                 <Link href="/" className="flex gap-2 pb-5 items-center">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -101,6 +101,17 @@ export default function DetailPicture() {
                     </div>
                 </section>
             </header>
+            <section className="grid gap-4 max-w-6xl py-5 border-y px-12 mx-auto">
+                <h2 className="font-serif text-xl">More From The Author</h2>
+                {more_picture.length > 0 &&
+                    more_picture.map((item, index) => (
+                        <Card
+                            imageUrl={`/storage/images/${item.image}`}
+                            userId={item.user.name}
+                            id={item.id}
+                        />
+                    ))}
+            </section>
         </>
     );
 }

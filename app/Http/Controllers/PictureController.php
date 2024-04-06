@@ -62,8 +62,13 @@ class PictureController extends Controller
     {
         $picture = Picture::with('user')->findOrFail($id); // get data picture by id
         $comment = Comment::with('user')->where('picture_id', $id)->get();
+        $more_picture_by_author = Picture::with('user')
+            ->where('user_id', $picture->user_id) // cari gambar lain oleh penulis yang sama
+            ->where('id', '!=', $id) // kecuali gambar saat ini
+            ->take(3) // ambil 5 gambar
+            ->get();
 
-        return inertia('picture/detail', ['picture' => $picture, 'comment' => $comment]);
+        return inertia('picture/detail', ['picture' => $picture, 'comment' => $comment, 'more_picture' => $more_picture_by_author]);
     }
 
     /**
