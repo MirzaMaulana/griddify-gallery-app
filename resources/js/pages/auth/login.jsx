@@ -1,4 +1,6 @@
-import { useForm } from "@inertiajs/inertia-react";
+import { Link, useForm } from "@inertiajs/inertia-react";
+import ThemeController from "../../components/theme-controller";
+import Footer from "../../components/footer";
 
 export default function Login() {
     const { data, setData, post, processing, errors } = useForm({
@@ -12,43 +14,72 @@ export default function Login() {
     };
 
     return (
-        <section className="w-full h-screen flex justify-center items-center">
-            <form
-                className="flex flex-col max-w-md w-full p-4 rounded-md shadow-lg"
-                onSubmit={handleSubmit}
-                action="/login"
-            >
-                <h2 className="mb-4 text-center text-2xl font-semibold">
-                    Login
-                </h2>
-                <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    value={data.email}
-                    onChange={(e) => setData("email", e.target.value)}
-                    placeholder="Email"
-                    className="mb-4 p-2 input input-bordered w-full"
-                    required
-                />
-
-                <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    value={data.password}
-                    onChange={(e) => setData("password", e.target.value)}
-                    placeholder="Password"
-                    className="mb-4 p-2 input input-bordered w-full"
-                    required
-                />
-                <button
-                    type="submit"
-                    className="bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+        <section>
+            <div className="absolute m-5 right-0">
+                <ThemeController />
+            </div>
+            <div className="w-full h-screen flex justify-center items-center">
+                <form
+                    className="flex flex-col max-w-lg w-full px-8 py-14 rounded-2xl shadow-2xl"
+                    onSubmit={handleSubmit}
+                    action="/login"
                 >
-                    Login
-                </button>
-            </form>
+                    <h3 className="text-2xl mb-2 font-semibold font-mont text-center">
+                        Welcome Back!
+                    </h3>
+                    <p className="font-serif mb-4 text-center">
+                        Let's start getting in to Sign in
+                    </p>
+                    <label
+                        htmlFor="email"
+                        className="text-sm font-mont font-semibold"
+                    >
+                        Email
+                        <input
+                            type="email"
+                            autoFocus
+                            name="email"
+                            id="email"
+                            value={data.email}
+                            onChange={(e) => setData("email", e.target.value)}
+                            placeholder="Email"
+                            className="mb-4 p-2 input input-bordered w-full font-normal mt-[2px]"
+                            required
+                        />
+                    </label>
+                    <label
+                        htmlFor="password"
+                        className="text-sm font-mont font-semibold"
+                    >
+                        Password
+                        <input
+                            type="password"
+                            name="password"
+                            id="password"
+                            value={data.password}
+                            onChange={(e) =>
+                                setData("password", e.target.value)
+                            }
+                            placeholder="Password"
+                            className="mb-4 p-2 input input-bordered w-full font-normal mt-[2px]"
+                            required
+                        />
+                    </label>
+                    <button
+                        type="submit"
+                        className="btn btn-secondary font-mont font-semibold mt-3"
+                    >
+                        Login
+                    </button>
+                    <p className="font-mont text-center text-sm mt-4">
+                        Don't have an account?, please{" "}
+                        <Link href="/register" className="text-blue-400">
+                            register
+                        </Link>
+                    </p>
+                </form>
+            </div>
+            <Footer />
         </section>
     );
 }
