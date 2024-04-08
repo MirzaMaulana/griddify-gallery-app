@@ -2,6 +2,7 @@ import { Link, usePage } from "@inertiajs/inertia-react";
 import React from "react";
 import Navbar from "../components/navbar";
 import Card from "../components/card";
+import Footer from "../components/footer";
 
 const Home = () => {
     const { auth, pictures } = usePage().props;
@@ -77,6 +78,7 @@ const Home = () => {
                     ))}
                 </div>
             </section>
+            <Footer />
         </main>
     );
 };
