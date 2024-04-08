@@ -68,7 +68,7 @@ const Home = () => {
                         </select>
                     </div>
                 )}
-                <div className="grid gap-5 max-w-6xl mx-auto grid-cols-3 place-items-center mt-8">
+                <div className="grid gap-5 mx-auto grid-cols-3 place-items-center mt-8">
                     {pictures.data.map((item, index) => (
                         <Card
                             imageUrl={`/storage/images/${item.image}`}
