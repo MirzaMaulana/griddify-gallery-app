@@ -77,6 +77,43 @@ const Home = () => {
                         />
                     ))}
                 </div>
+                {/* Pagination */}
+                <div className="flex justify-center mt-5 join">
+                    <Link
+                        href={pictures.prev_page_url}
+                        className={`join-item btn ${
+                            !pictures.prev_page_url ? "btn-disabled" : ""
+                        }`}
+                        disabled={!pictures.prev_page_url}
+                    >
+                        «
+                    </Link>
+                    {Array.from(
+                        { length: pictures.last_page },
+                        (_, i) => i + 1
+                    ).map((page) => (
+                        <Link
+                            key={page}
+                            href={`${pictures.first_page_url}&page=${page}`} // Use pagination URL
+                            className={`join-item btn ${
+                                page === pictures.current_page
+                                    ? "btn-active"
+                                    : ""
+                            }`}
+                        >
+                            {page}
+                        </Link>
+                    ))}
+                    <Link
+                        href={pictures.next_page_url}
+                        className={`join-item btn ${
+                            !pictures.next_page_url ? "btn-disabled" : ""
+                        }`}
+                        disabled={!pictures.next_page_url}
+                    >
+                        »
+                    </Link>
+                </div>
             </section>
             <Footer />
         </main>
