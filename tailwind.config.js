@@ -6,6 +6,9 @@ export default {
             fontFamily: {
                 mont: ["Montserrat", "sans-serif"],
             },
+            screens: {
+                "mx-md": { max: "767px" },
+            },
         },
     },
     plugins: [require("daisyui")],

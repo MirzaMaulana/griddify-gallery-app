@@ -3,6 +3,7 @@ import Navbar from "../../components/navbar";
 import Card from "../../components/card";
 import { Link } from "@inertiajs/inertia-react";
 import Comment from "../../components/comment";
+import Footer from "../../components/footer";
 
 export default function DetailPicture() {
     const { picture, comment, more_picture } = usePage().props;
@@ -10,7 +11,7 @@ export default function DetailPicture() {
     return (
         <>
             <Navbar />
-            <header className="max-w-6xl pt-5 pb-14 px-12 rounded-md mx-auto">
+            <header className="md:max-w-6xl pt-5 pb-14 md:px-12 px-6 w-screen rounded-md mx-auto">
                 <Link href="/" className="flex gap-2 pb-5 items-center">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -27,13 +28,13 @@ export default function DetailPicture() {
                         Back
                     </span>
                 </Link>
-                <section className="grid grid-cols-3 mt-5 font-mont gap-6">
+                <section className="grid md:grid-cols-3 grid-cols-1 mt-5 font-mont gap-6">
                     <div className="col-span-2">
-                        <div className="w-full h-96 flex justify-center items-center">
+                        <div className="w-full md:h-96 flex justify-center items-center">
                             <img
                                 src={`/storage/images/${picture.image}`}
                                 alt=""
-                                className="rounded-lg h-full"
+                                className="rounded-lg md:h-full mx-md:w-full"
                             />
                         </div>
                         <div className="flex mt-10 mb-5 justify-between items-center w-full">
@@ -101,17 +102,25 @@ export default function DetailPicture() {
                     </div>
                 </section>
             </header>
-            <section className="grid gap-4 max-w-6xl py-5 border-y px-12 mx-auto">
+            <section className=" md:max-w-6xl py-5 border-y px-6 w-screen md:px-12 mx-auto">
                 <h2 className="font-serif text-xl">More From The Author</h2>
-                {more_picture.length > 0 &&
-                    more_picture.map((item, index) => (
-                        <Card
-                            imageUrl={`/storage/images/${item.image}`}
-                            userId={item.user.name}
-                            id={item.id}
-                        />
-                    ))}
+                <div className="grid gap-4 md:grid-cols-3 mt-4 grid-cols-1">
+                    {more_picture.length > 0 ? (
+                        more_picture.map((item, index) => (
+                            <Card
+                                imageUrl={`/storage/images/${item.image}`}
+                                userId={item.user.name}
+                                id={item.id}
+                            />
+                        ))
+                    ) : (
+                        <p className="col-span-3 text-lg text-center font-mont font-medium py-10">
+                            This author has not added any more posts :)
+                        </p>
+                    )}
+                </div>
             </section>
+            <Footer />
         </>
     );
 }

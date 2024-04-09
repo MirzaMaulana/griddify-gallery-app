@@ -11,7 +11,7 @@ class ProfileController extends Controller
     public function index()
     {
         $profile = Auth::user();
-        $myPicture = Picture::with('user')->where('user_id', $profile->id)->get();
-        return inertia('profile/my-post', ['user' => $profile, 'myPicture' => $myPicture]);
+        $myPictures = Picture::with('user')->where('user_id', $profile->id)->paginate(6);
+        return inertia('profile/my-post', ['user' => $profile, 'myPictures' => $myPictures]);
     }
 }

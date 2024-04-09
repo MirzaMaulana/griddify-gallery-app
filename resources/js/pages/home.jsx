@@ -36,9 +36,9 @@ const Home = () => {
                     </h1>
                 </>
             )}
-            <section className="max-w-7xl mx-auto mt-5">
+            <section className="md:max-w-7xl w-screen mx-auto mt-5">
                 {auth && (
-                    <div className="max-w-7xl px-10 mx-auto flex gap-3">
+                    <div className="md:max-w-7xl w-screen md:px-10 px-6 mx-auto">
                         <label className="input input-secondary flex items-center gap-2 w-full">
                             <input
                                 type="text"
@@ -58,17 +58,9 @@ const Home = () => {
                                 />
                             </svg>
                         </label>
-                        <select className="select select-secondary w-52">
-                            <option disabled selected>
-                                Featured
-                            </option>
-                            <option>Auto</option>
-                            <option>Dark mode</option>
-                            <option>Light mode</option>
-                        </select>
                     </div>
                 )}
-                <div className="grid gap-5 mx-auto grid-cols-3 place-items-center mt-8">
+                <div className="grid gap-5 mx-auto md:grid-cols-3 grid-cols-1 place-items-center mt-8">
                     {pictures.data.map((item, index) => (
                         <Card
                             imageUrl={`/storage/images/${item.image}`}
