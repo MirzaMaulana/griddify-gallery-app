@@ -33,7 +33,6 @@ class PictureController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg',
         ]);
 
         $image = $request->file('image');
@@ -76,7 +75,8 @@ class PictureController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $picture = Picture::with('user')->findOrFail($id);
+        return inertia('picture/edit', ['dataPicture' => $picture]);
     }
 
     /**
@@ -84,7 +84,40 @@ class PictureController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg',
+        ]);
+
+        $picture = Picture::findOrFail($id);
+
+        $image = $request->file('image');
+        if ($image) {
+            $imageName = $image->getClientOriginalName();
+
+            $imagePath = $image->storeAs('public/images', $imageName);
+
+            // Delete old image
+            $oldImagePath = public_path('storage/images/' . $picture->image);
+            if (File::exists($oldImagePath)) {
+                File::delete($oldImagePath);
+            }
+
+            $picture->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'image' => $imageName,
+            ]);
+        } else {
+            $picture->update([
+                'title' => $request->title,
+                'description' => $request->description,
+            ]);
+        }
+
+        return redirect()->route('picture.show', $id)
+            ->withSuccess('You have successfully updated the image');
     }
 
     /**
