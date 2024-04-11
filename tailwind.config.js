@@ -13,6 +13,6 @@ export default {
     },
     plugins: [require("daisyui")],
     daisyui: {
-        themes: ["sunset", "fantasy"],
+        themes: ["fantasy", "sunset"],
     },
 };

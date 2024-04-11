@@ -32,30 +32,37 @@ class AuthController extends Controller
             return redirect('/')
                 ->withSuccess('You have successfully logged in!');
         }
-
         return Redirect::back()->withErrors(['email' => 'Login failed. Please check your credentials and try again.']);
     }
 
     public function register(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:250',
-            'email' => 'required|email|max:250|unique:users',
-            'password' => 'required|min:8'
-        ]);
+        try {
+            $request->validate([
+                'name' => 'required|string|max:250',
+                'email' => 'required|email|max:250|unique:users',
+                'password' => 'required|min:8'
+            ]);
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
-        ]);
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password)
+            ]);
 
-        $credentials = $request->only('email', 'password');
-        Auth::attempt($credentials);
-        $request->session()->regenerate();
-        return redirect('/')
-            ->withSuccess('You have successfully registered & logged in!');
+            $credentials = $request->only('email', 'password');
+            if (Auth::attempt($credentials)) {
+                $request->session()->regenerate();
+                return redirect('/')
+                    ->withSuccess('You have successfully registered & logged in!');
+            } else {
+                throw new \Exception('Failed to authenticate after registration.');
+            }
+        } catch (\Exception $e) {
+            return Redirect::back()->withErrors(['failed' => [$e->getMessage()]]);
+        }
     }
+
 
     public function logout()
     {

@@ -2,8 +2,8 @@ import { Link, useForm } from "@inertiajs/inertia-react";
 import ThemeController from "../../components/theme-controller";
 import Footer from "../../components/footer";
 
-export default function Register() {
-    const { data, setData, post, processing, errors } = useForm({
+export default function Register({ errors }) {
+    const { data, setData, post, processing } = useForm({
         name: "",
         email: "",
         password: "",
@@ -21,7 +21,7 @@ export default function Register() {
             </div>
             <div className="w-full h-screen flex justify-center items-center">
                 <form
-                    className="flex flex-col max-w-lg w-full px-8 py-12 rounded-2xl shadow-2xl"
+                    className="flex flex-col max-w-lg w-full "
                     onSubmit={handleSubmit}
                     action="/register"
                 >
@@ -31,6 +31,27 @@ export default function Register() {
                     <p className="font-serif mb-4 text-center">
                         Let's start getting in to Sign in
                     </p>
+                    {errors && errors.failed && (
+                        <div
+                            role="alert"
+                            className="alert bg-red-500 font-mont text-white my-4"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="stroke-current shrink-0 h-6 w-6"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                            </svg>
+                            <span>{errors.failed}</span>
+                        </div>
+                    )}
                     <label
                         htmlFor="name"
                         className="text-sm font-mont font-semibold"
@@ -95,7 +116,7 @@ export default function Register() {
                     </p>
                 </form>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </section>
     );
 }
