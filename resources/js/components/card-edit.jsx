@@ -70,8 +70,8 @@ export default function Card({ id, image, title }) {
                             <path
                                 fill="none"
                                 stroke="currentColor"
-                                stroke-linejoin="round"
-                                stroke-width="3.75"
+                                strokeLinejoin="round"
+                                strokeWidth={3.75}
                                 d="M12 12h.01v.01H12zm0-7h.01v.01H12zm0 14h.01v.01H12z"
                             />
                         </svg>

@@ -6,7 +6,7 @@ import Footer from "../components/footer";
 
 const Home = () => {
     const { auth, pictures } = usePage().props;
-    console.log(pictures);
+
     return (
         <main>
             <Navbar />
@@ -60,15 +60,22 @@ const Home = () => {
                         </label>
                     </div>
                 )}
-                <div className="grid gap-5 mx-auto md:grid-cols-3 grid-cols-1 place-items-center mt-8">
-                    {pictures.data.map((item, index) => (
-                        <Card
-                            imageUrl={`/storage/images/${item.image}`}
-                            userId={item.user.name}
-                            id={item.id}
-                        />
-                    ))}
-                </div>
+                {pictures.data.length > 0 ? (
+                    <div className="grid gap-5 mx-auto md:grid-cols-3 grid-cols-1 place-items-center mt-8">
+                        {pictures.data.map((item, index) => (
+                            <Card
+                                key={item.id}
+                                imageUrl={`/storage/images/${item.image}`}
+                                userId={item.user.name}
+                                id={item.id}
+                            />
+                        ))}
+                    </div>
+                ) : (
+                    <h1 className="text-4xl font-bold font-mont text-center my-20 capitalize">
+                        There are no posts here yet :)
+                    </h1>
+                )}
                 {/* Pagination */}
                 <div className="flex justify-center mt-5 join">
                     <Link

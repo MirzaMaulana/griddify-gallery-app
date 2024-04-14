@@ -1,4 +1,4 @@
-import { usePage } from "@inertiajs/inertia-react";
+import { usePage, useForm } from "@inertiajs/inertia-react";
 import Navbar from "../../components/navbar";
 import Card from "../../components/card";
 import { Link } from "@inertiajs/inertia-react";
@@ -6,7 +6,16 @@ import Comment from "../../components/comment";
 import Footer from "../../components/footer";
 
 export default function DetailPicture() {
-    const { picture, comment, more_picture } = usePage().props;
+    const { picture, comment, more_picture, liked } = usePage().props;
+    const { data, setData, post, processing } = useForm({
+        picture_id: picture.id,
+    });
+    const handleLiked = (e) => {
+        e.preventDefault();
+        if (!liked) {
+            post("/like");
+        }
+    };
 
     return (
         <>
@@ -57,31 +66,29 @@ export default function DetailPicture() {
                             </div>
                             <div className="flex gap-4 items-center">
                                 <svg
+                                    id="Like"
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="24"
                                     height="24"
+                                    className="hover:fill-red-500"
                                     viewBox="0 0 48 48"
+                                    onClick={handleLiked}
                                 >
                                     <path
-                                        fill="currentColor"
-                                        stroke="currentColor"
+                                        fill={`${
+                                            liked ? "red" : "currentColor"
+                                        }`}
+                                        stroke={`${
+                                            liked ? "red" : "currentColor"
+                                        }`}
                                         strokeLinecap="round"
+                                        className="hover:fill-red-500 hover:stroke-red-500"
                                         strokeLinejoin="round"
                                         strokeWidth={4}
                                         d="M15 8C8.925 8 4 12.925 4 19c0 11 13 21 20 23.326C31 40 44 30 44 19c0-6.075-4.925-11-11-11c-3.72 0-7.01 1.847-9 4.674A10.987 10.987 0 0 0 15 8"
                                     />
                                 </svg>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        fill="currentColor"
-                                        d="m15.113 3.21l.094.083l5.5 5.5a1 1 0 0 1-1.175 1.59l-3.172 3.171l-1.424 3.797a1 1 0 0 1-.158.277l-.07.08l-1.5 1.5a1 1 0 0 1-1.32.082l-.095-.083L9 16.415l-3.793 3.792a1 1 0 0 1-1.497-1.32l.083-.094L7.585 15l-2.792-2.793a1 1 0 0 1-.083-1.32l.083-.094l1.5-1.5a1 1 0 0 1 .258-.187l.098-.042l3.796-1.425l3.171-3.17a1 1 0 0 1 1.497-1.26z"
-                                    />
-                                </svg>
+
                                 <a
                                     href={`/storage/images/${picture.image}`}
                                     download

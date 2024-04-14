@@ -24,20 +24,9 @@ export default function ProfileNavigation({ children }) {
                             <h1 className="font-semibold font-mont text-3xl">
                                 {user.name}
                             </h1>
-                            <ul className="flex gap-3 mt-2">
-                                <li className="font-serif flex flex-col items-center">
-                                    Followers
-                                    <span className="font-mont font-bold text-sm">
-                                        20
-                                    </span>
-                                </li>
-                                <li className="font-serif flex flex-col items-center">
-                                    Follow
-                                    <span className="font-mont font-bold text-sm">
-                                        20
-                                    </span>
-                                </li>
-                            </ul>
+                            <p className="text-xl font-serif italic">
+                                {user.email}
+                            </p>
                         </div>
                     </div>
                     <button className="btn btn-outline text-xs font-mont font-bold rounded-full ms-auto">

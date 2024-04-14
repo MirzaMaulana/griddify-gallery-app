@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Picture;
+use App\Models\PictureLike;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -67,7 +68,13 @@ class PictureController extends Controller
             ->take(3) // ambil 5 gambar
             ->get();
 
-        return inertia('picture/detail', ['picture' => $picture, 'comment' => $comment, 'more_picture' => $more_picture_by_author]);
+        $userHasLiked = false; // Inisialisasi variabel untuk menandai apakah pengguna telah menyukai gambar ini
+
+        if (auth()->check()) {
+            $userId = auth()->id();
+            $userHasLiked = PictureLike::where('user_id', $userId)->where('picture_id', $id)->exists();
+        }
+        return inertia('picture/detail', ['picture' => $picture, 'comment' => $comment, 'more_picture' => $more_picture_by_author, 'liked' => $userHasLiked]);
     }
 
     /**

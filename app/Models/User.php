@@ -47,4 +47,9 @@ class User extends Authenticatable
     protected $attributes = [
         'avatar' => ''
     ];
+
+    public function likedPictures()
+    {
+        return $this->belongsToMany(Picture::class, 'like_picts', 'user_id', 'picture_id');
+    }
 }

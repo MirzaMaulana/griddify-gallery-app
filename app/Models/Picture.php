@@ -32,4 +32,9 @@ class Picture extends Model
             Comment::where('picture_id', $picture->id)->delete();
         });
     }
+
+    public function likedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'like_picts', 'picture_id', 'user_id');
+    }
 }
