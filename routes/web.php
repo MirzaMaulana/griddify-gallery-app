@@ -32,8 +32,11 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/register', 'registerIndex')->name('register');
 });
 
-Route::resource('/picture', PictureController::class)->middleware(['auth', 'checkPictureOwner'])->except(['show']);
+Route::resource('/picture', PictureController::class)->middleware(['auth'])->except(['show', 'update', 'edit']);
 Route::get('/picture/{id}', [PictureController::class, 'show'])->name('picture.show');
+Route::get('/picture/{id}/edit', [PictureController::class, 'edit'])->middleware(['auth', 'checkPictureOwner'])->name('picture.edit');
+Route::post('/picture/{id}/update', [PictureController::class, 'update'])->middleware(['auth', 'checkPictureOwner'])->name('picture.update');
+
 
 Route::controller(CommentController::class)->middleware('auth')->group(function () {
     Route::post('/comment', 'store')->name('comment.store');

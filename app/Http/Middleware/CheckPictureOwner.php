@@ -16,7 +16,7 @@ class CheckPictureOwner
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $id = $request->route('picture'); /// Ambil ID gambar dari URL
+        $id = $request->route('id'); /// Ambil ID gambar dari URL
         $picture = Picture::find($id); // Cari gambar berdasarkan ID
 
         if ($picture->user_id !== auth()->id()) {

@@ -137,6 +137,7 @@ export default function Create() {
                 <button
                     type="submit"
                     className="btn col-span-2 mt-5 btn-secondary"
+                    disabled={processing}
                 >
                     Upload Picture
                 </button>

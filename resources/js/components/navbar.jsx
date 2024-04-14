@@ -41,9 +41,7 @@ const Navbar = () => {
                                     <Link href="/profile">Profile</Link>
                                 </li>
                                 <li>
-                                    <Link href="/picture/create">
-                                        Upload your shot
-                                    </Link>
+                                    <Link href="/upload">Upload your shot</Link>
                                 </li>
                                 <li>
                                     <a>Settings</a>
