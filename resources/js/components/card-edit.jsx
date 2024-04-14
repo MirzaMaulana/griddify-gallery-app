@@ -1,5 +1,6 @@
 //import inertia adapter
 import { Inertia } from "@inertiajs/inertia";
+import { Link } from "@inertiajs/inertia-react";
 import { useState } from "react"; // Import useState hook
 
 export default function Card({ id, image, title }) {
@@ -80,7 +81,7 @@ export default function Card({ id, image, title }) {
                         className="dropdown-content z-[1] border mt-3 menu p-2 shadow bg-base-100 rounded-box w-52"
                     >
                         <li>
-                            <a>Edit</a>
+                            <Link href={`/picture/${id}/edit`}>Edit</Link>
                         </li>
                         <li>
                             {/* You can open the modal using document.getElementById('ID').showModal() method */}

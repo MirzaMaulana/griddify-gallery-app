@@ -50,7 +50,7 @@ class PictureController extends Controller
             'views' => 0,
         ]);
 
-        return redirect('/')
+        return redirect()->route('picture.show', ['id' => $picture->id])
             ->withSuccess('You have successfully uploaded an image');
     }
 
