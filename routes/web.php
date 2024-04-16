@@ -7,6 +7,7 @@ use App\Http\Controllers\PictureLikeController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Picture;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +20,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $pictures = Picture::with('user')->orderBy('created_at', 'desc')->paginate(6);
 
-    return inertia('home', ['pictures' => $pictures]);
-});
+Route::get('/', function (Request $request) {
+    $searchQuery = $request->input('search');
+
+    $pictures = Picture::with('user')
+        ->when($searchQuery, function ($query) use ($searchQuery) {
+            $query->where('title', 'like', '%' . $searchQuery . '%');
+        })
+        ->orderByDesc('created_at')
+        ->paginate(6);
+
+    return inertia('home', compact('pictures'));
+})->name('home');
+
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'loginIndex')->name('login.index');
