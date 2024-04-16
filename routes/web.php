@@ -31,7 +31,7 @@ Route::get('/', function (Request $request) {
         ->orderByDesc('created_at')
         ->paginate(6);
 
-    return inertia('home', compact('pictures'));
+    return inertia('home', ['pictures' => $pictures, 'searchQuery' => $searchQuery]);
 })->name('home');
 
 

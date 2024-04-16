@@ -1,11 +1,17 @@
-import { Link, usePage } from "@inertiajs/inertia-react";
+import { Link, usePage, useForm } from "@inertiajs/inertia-react";
 import React from "react";
 import Navbar from "../components/navbar";
 import Card from "../components/card";
 import Footer from "../components/footer";
 
 const Home = () => {
-    const { auth, pictures } = usePage().props;
+    const { auth, pictures, searchQuery } = usePage().props;
+    const { data, setData, get } = useForm({ search: searchQuery || "" });
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        get(`/`, { search: data.search });
+    };
 
     return (
         <main>
@@ -13,7 +19,7 @@ const Home = () => {
             {!auth && (
                 <>
                     <header className="text-center h-[85vh] flex flex-col justify-center items-center">
-                        <div className="py-2 w-60 mb-6 bg-gray-300 text-black rounded-full font-semibold font-sans mx-auto">
+                        <div className="py-2 w-60 bg-gray-300 text-black rounded-full font-semibold font-sans mx-auto">
                             One library, endless stories.
                         </div>
                         <h1 className="text-7xl font-serif leading-tight">
@@ -39,25 +45,33 @@ const Home = () => {
             <section className="md:max-w-7xl w-screen mx-auto mt-5">
                 {auth && (
                     <div className="md:max-w-7xl w-screen md:px-10 px-6 mx-auto">
-                        <label className="input input-secondary flex items-center gap-2 w-full">
-                            <input
-                                type="text"
-                                className="grow"
-                                placeholder="Search"
-                            />
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 16 16"
-                                fill="currentColor"
-                                className="w-4 h-4 opacity-70"
-                            >
-                                <path
-                                    fillRule="evenodd"
-                                    d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-                                    clipRule="evenodd"
+                        <form action="" onSubmit={handleSearch}>
+                            <label className="input input-secondary flex items-center gap-2 w-full">
+                                <input
+                                    type="text"
+                                    className="grow"
+                                    placeholder="Search"
+                                    onChange={(e) =>
+                                        setData({ search: e.target.value })
+                                    }
+                                    value={data.search}
                                 />
-                            </svg>
-                        </label>
+                                <button>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 16 16"
+                                        fill="currentColor"
+                                        className="w-4 h-4 opacity-70"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                                            clipRule="evenodd"
+                                        />
+                                    </svg>
+                                </button>
+                            </label>
+                        </form>
                     </div>
                 )}
                 {pictures.data.length > 0 ? (
