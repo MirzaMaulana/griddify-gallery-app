@@ -104,6 +104,7 @@ export default function Register({ errors }) {
                     </label>
                     <button
                         type="submit"
+                        disabled={processing}
                         className="btn btn-secondary font-mont font-semibold mt-3"
                     >
                         Register

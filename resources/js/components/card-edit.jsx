@@ -1,9 +1,11 @@
 //import inertia adapter
 import { Inertia } from "@inertiajs/inertia";
 import { Link } from "@inertiajs/inertia-react";
-import { useState } from "react"; // Import useState hook
+import { useState } from "react";
 
 export default function Card({ id, image, title }) {
+    const [show, setShow] = useState(false);
+    const [processing, setProcessing] = useState(false);
     const maxTitleLength = 25; // Set the maximum length of the title
 
     const shortenTitle = (title) => {
@@ -15,41 +17,53 @@ export default function Card({ id, image, title }) {
 
     const handleDeleted = (e) => {
         e.preventDefault();
+        setProcessing(true);
         Inertia.delete(`/picture/${id}`, {
+            onSuccess: () => {
+                setShow(false);
+                setProcessing(false);
+            },
             onError: (errors) => {},
         });
     };
 
     return (
         <div className="card w-[340px] bg-base-100">
-            <dialog id="my_modal_3" className="modal">
-                <div className="modal-box font-mont">
-                    <form method="dialog">
-                        {/* if there is a button in form, it will close the modal */}
-                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                            ✕
-                        </button>
-                    </form>
-                    <h3 className="font-bold text-lg text-red-500">Warning</h3>
-                    <p className="py-4">
-                        Data that has been deleted cannot be restored
-                    </p>
-                    <div className="flex gap-2 justify-end mt-5">
-                        <form method="dialog">
-                            <button className="text-sm btn btn-secondary">
+            <div
+                className={`fixed inset-0 items-center justify-center z-50 font-mont backdrop-blur confirm-dialog ${
+                    show ? "flex" : "hidden"
+                }`}
+            >
+                <div className="relative px-4 min-h-screen md:flex md:items-center md:justify-center">
+                    <div className=" opacity-25 w-full h-full absolute z-10 inset-0"></div>
+                    <div className="bg-base-100 rounded-lg md:max-w-md md:mx-auto p-5 fixed inset-x-0 bottom-0 z-50 mb-4 mx-4 md:relative shadow-lg">
+                        <div>
+                            <p className="font-bold">Warning!</p>
+                            <p className="text-sm text-gray-700 mt-1">
+                                You will lose all of your data by deleting this.
+                                This action cannot be undone.
+                            </p>
+                        </div>
+                        <div className="text-center md:text-right mt-4 md:flex md:justify-end">
+                            <button
+                                id="confirm-delete-btn"
+                                onClick={handleDeleted}
+                                disabled={processing}
+                                className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-red-200 text-red-700 rounded-lg font-semibold text-sm md:ml-2 md:order-2"
+                            >
+                                Delete
+                            </button>
+                            <button
+                                id="confirm-cancel-btn"
+                                onClick={() => setShow(false)}
+                                className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-gray-200 rounded-lg font-semibold text-sm mt-4 md:mt-0 md:order-1"
+                            >
                                 Cancel
                             </button>
-                        </form>
-
-                        <button
-                            className="text-sm btn btn-error"
-                            onClick={handleDeleted}
-                        >
-                            Delete
-                        </button>
+                        </div>
                     </div>
                 </div>
-            </dialog>
+            </div>
             <figure className="rounded-md">
                 <img
                     src={image}
@@ -87,11 +101,7 @@ export default function Card({ id, image, title }) {
                             {/* You can open the modal using document.getElementById('ID').showModal() method */}
                             <p
                                 className="text-red-500"
-                                onClick={() =>
-                                    document
-                                        .getElementById("my_modal_3")
-                                        .showModal()
-                                }
+                                onClick={() => setShow(true)}
                             >
                                 Delete
                             </p>

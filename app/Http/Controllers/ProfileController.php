@@ -13,7 +13,7 @@ class ProfileController extends Controller
     public function index()
     {
         $profile = Auth::user();
-        $myPictures = Picture::with('user')->where('user_id', $profile->id)->paginate(6);
+        $myPictures = Picture::with('user')->where('user_id', $profile->id)->orderByDesc('created_at')->paginate(6);
         return inertia('profile/my-post', ['user' => $profile, 'myPictures' => $myPictures]);
     }
 

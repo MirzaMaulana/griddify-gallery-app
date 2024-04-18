@@ -10,7 +10,7 @@ export default function Profile() {
             <ProfileNavigation>
                 {myPictures.data.length > 0 ? (
                     <>
-                        <div className="grid gap-8 grid-cols-3 place-items-center mt-5">
+                        <div className="grid gap-8 grid-cols-1 md:grid-cols-3 place-items-center mt-5">
                             {myPictures.data.map((item) => (
                                 <Card
                                     key={item.id}
