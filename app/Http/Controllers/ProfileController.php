@@ -17,35 +17,35 @@ class ProfileController extends Controller
         return inertia('profile/my-post', ['user' => $profile, 'myPictures' => $myPictures]);
     }
 
-    // public function update(Request $request)
-    // {
-    //     $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // max 2MB
-    //     ]);
+    public function update(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // max 2MB
+        ]);
 
-    //     $user = Auth::user();
+        $user = Auth::user();
 
-    //     if (!$user) {
-    //         abort(403, 'Unauthorized action.');
-    //     }
+        if (!$user) {
+            abort(403, 'Unauthorized action.');
+        }
 
-    //     $user->name = $request->name;
+        $user->name = $request->name;
 
-    //     if ($request->hasFile('avatar')) {
-    //         // Delete existing avatar if it exists
-    //         if ($user->avatar) {
-    //             Storage::delete('public/avatars/' . $user->avatar);
-    //         }
+        if ($request->hasFile('avatar')) {
+            // Delete existing avatar if it exists
+            if ($user->avatar) {
+                Storage::delete('public/avatars/' . $user->avatar);
+            }
 
-    //         $avatar = $request->file('avatar');
-    //         $avatarName = $user->id . '_' . time() . '.' . $avatar->getClientOriginalExtension();
-    //         $avatar->store('public/avatars');
-    //         $user->avatar = $avatarName;
-    //     }
+            $avatar = $request->file('avatar');
+            $avatarName = $user->id . '_' . time() . '.' . $avatar->getClientOriginalExtension();
+            $avatar->store('public/avatars');
+            $user->avatar = $avatarName;
+        }
 
-    //     $user->save();
+        $user->save();
 
-    //     return redirect()->route('profile.index')->with('success', 'Profile updated successfully.');
-    // }
+        return redirect()->route('profile.index')->with('success', 'Profile updated successfully.');
+    }
 }

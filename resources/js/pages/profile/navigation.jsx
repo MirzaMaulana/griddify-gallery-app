@@ -6,7 +6,7 @@ export default function ProfileNavigation({ children }) {
     const { user, myPicture } = usePage().props;
 
     const pathname = window.location.pathname;
-    console.log(pathname);
+
     return (
         <>
             <Navbar />
