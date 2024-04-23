@@ -31,9 +31,6 @@ export default function ProfileNavigation({ children }) {
                             </p>
                         </div>
                     </div>
-                    <button className="btn btn-outline text-xs font-mont font-bold rounded-full ms-auto">
-                        Edit Profile
-                    </button>
                 </section>
                 <nav className="max-w-6xl mx-auto mt-14 border-b">
                     <ul className="py-5 flex gap-8 font-mont font-semibold">

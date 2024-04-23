@@ -35,7 +35,7 @@ export default function Create() {
 
             <form
                 action="/picture"
-                className="max-w-5xl p-6 h-4/5 mx-auto rounded-lg font-mont grid grid-cols-2 gap-10"
+                className="max-w-5xl p-6 h-4/5 mx-auto rounded-lg font-mont flex flex-col md:grid md:grid-cols-2 gap-10"
                 onSubmit={handleSubmit}
             >
                 {error && (
