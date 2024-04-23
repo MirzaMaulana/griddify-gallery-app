@@ -83,6 +83,8 @@ const Home = () => {
                                 imageUrl={`/storage/images/${item.image}`}
                                 userId={item.user.name}
                                 id={item.id}
+                                like={item.likes_count}
+                                views={item.views}
                             />
                         ))}
                     </div>

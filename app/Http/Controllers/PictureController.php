@@ -60,7 +60,7 @@ class PictureController extends Controller
      */
     public function show(string $id)
     {
-        $picture = Picture::with('user')->findOrFail($id); // get data picture by id
+        $picture = Picture::with('user')->findOrFail($id); // dapatkan gambar berdasarkan id
         $comment = Comment::with('user')->where('picture_id', $id)->get();
         $more_picture_by_author = Picture::with('user')
             ->where('user_id', $picture->user_id) // cari gambar lain oleh penulis yang sama
@@ -74,6 +74,11 @@ class PictureController extends Controller
             $userId = auth()->id();
             $userHasLiked = PictureLike::where('user_id', $userId)->where('picture_id', $id)->exists();
         }
+
+        // Update jumlah views
+        $picture->views += 1;
+        $picture->save();
+
         return inertia('picture/detail', ['picture' => $picture, 'comment' => $comment, 'more_picture' => $more_picture_by_author, 'liked' => $userHasLiked]);
     }
 

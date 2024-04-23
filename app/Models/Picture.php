@@ -33,8 +33,8 @@ class Picture extends Model
         });
     }
 
-    public function likedByUsers()
+    public function likes()
     {
-        return $this->belongsToMany(User::class, 'like_picts', 'picture_id', 'user_id');
+        return $this->hasMany(PictureLike::class);
     }
 }

@@ -38,7 +38,7 @@ export default function Card({ imageUrl, userId, like, views, id }) {
                                 d="M15 8C8.925 8 4 12.925 4 19c0 11 13 21 20 23.326C31 40 44 30 44 19c0-6.075-4.925-11-11-11c-3.72 0-7.01 1.847-9 4.674A10.987 10.987 0 0 0 15 8"
                             />
                         </svg>
-                        23
+                        {like}
                     </span>
                     <span className="flex gap-1 text-sm items-center font-mont">
                         <svg
@@ -52,7 +52,7 @@ export default function Card({ imageUrl, userId, like, views, id }) {
                                 d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"
                             />
                         </svg>
-                        125
+                        {views}
                     </span>
                 </div>
             </div>
