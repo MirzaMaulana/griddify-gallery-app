@@ -1,7 +1,7 @@
 import { Link } from "@inertiajs/inertia-react";
 export default function Footer() {
     return (
-        <footer className="py-7 mt-10 font-mont">
+        <footer className="py-7 mt-10 font-mont bg-base-100">
             <div className="items-center text-neutral-content footer max-w-7xl px-5 mx-auto">
                 <aside className="items-center grid-flow-col">
                     <Link href="/">

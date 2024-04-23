@@ -1,4 +1,4 @@
-import { Link, usePage } from "@inertiajs/inertia-react";
+import { Head, Link, usePage } from "@inertiajs/inertia-react";
 import ProfileNavigation from "./navigation";
 import Card from "../../components/card";
 
@@ -15,6 +15,7 @@ export default function LikedPicture() {
 
     return (
         <>
+            <Head title="Griddify | LikedPicture" />
             <ProfileNavigation>
                 {likedPicture.data.length > 0 ? (
                     <>

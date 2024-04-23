@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Navbar from "../../components/navbar";
-import { useForm } from "@inertiajs/inertia-react";
+import { Head, useForm } from "@inertiajs/inertia-react";
 
 export default function Create() {
     const [error, setError] = useState("");
@@ -30,6 +30,7 @@ export default function Create() {
     };
     return (
         <>
+            <Head title="Griddify | Upload" />
             <Navbar />
 
             <form

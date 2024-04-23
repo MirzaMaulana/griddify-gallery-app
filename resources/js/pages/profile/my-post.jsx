@@ -1,4 +1,4 @@
-import { Link, usePage } from "@inertiajs/inertia-react";
+import { Head, Link, usePage } from "@inertiajs/inertia-react";
 import ProfileNavigation from "./navigation";
 import Card from "../../components/card-edit";
 
@@ -7,6 +7,7 @@ export default function Profile() {
 
     return (
         <>
+            <Head title="Profile" />
             <ProfileNavigation>
                 {myPictures.data.length > 0 ? (
                     <>

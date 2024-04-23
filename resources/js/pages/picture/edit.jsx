@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Navbar from "../../components/navbar";
-import { useForm, usePage, Link } from "@inertiajs/inertia-react";
+import { useForm, usePage, Link, Head } from "@inertiajs/inertia-react";
 
 export default function Edit() {
     const [error, setError] = useState("");
@@ -42,6 +42,7 @@ export default function Edit() {
 
     return (
         <>
+            <Head title="Griddify | Edit" />
             <Navbar />
             <section className="max-w-5xl mx-auto">
                 <Link href="/" className="flex gap-2 pb-4 pt-2 items-center">

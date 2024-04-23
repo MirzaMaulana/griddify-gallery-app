@@ -1,4 +1,4 @@
-import { Link, useForm } from "@inertiajs/inertia-react";
+import { Head, Link, useForm } from "@inertiajs/inertia-react";
 import ThemeController from "../../components/theme-controller";
 import Footer from "../../components/footer";
 
@@ -16,6 +16,7 @@ export default function Register({ errors }) {
 
     return (
         <section>
+            <Head title="Griddify | Register" />
             <div className="absolute m-5 right-0">
                 <ThemeController />
             </div>

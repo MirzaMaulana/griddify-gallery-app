@@ -1,4 +1,4 @@
-import { Link, usePage, useForm } from "@inertiajs/inertia-react";
+import { Link, usePage, useForm, Head } from "@inertiajs/inertia-react";
 import React from "react";
 import Navbar from "../components/navbar";
 import Card from "../components/card";
@@ -15,6 +15,7 @@ const Home = () => {
 
     return (
         <main>
+            <Head title="Griddify" />
             <Navbar />
             {!auth && (
                 <>

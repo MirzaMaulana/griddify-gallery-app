@@ -1,4 +1,4 @@
-import { usePage, useForm } from "@inertiajs/inertia-react";
+import { usePage, useForm, Head } from "@inertiajs/inertia-react";
 import Navbar from "../../components/navbar";
 import Card from "../../components/card";
 import { Link } from "@inertiajs/inertia-react";
@@ -19,6 +19,7 @@ export default function DetailPicture() {
 
     return (
         <>
+            <Head title="Griddify | Detail" />
             <Navbar />
             <header className="md:max-w-6xl pt-5 pb-14 md:px-12 px-6 w-screen rounded-md mx-auto">
                 <Link href="/" className="flex gap-2 pb-5 items-center">

@@ -5,6 +5,8 @@ import PaddingContainer from "../../components/padding-container";
 export default function ProfileNavigation({ children }) {
     const { user, myPicture } = usePage().props;
 
+    const pathname = window.location.pathname;
+    console.log(pathname);
     return (
         <>
             <Navbar />
@@ -35,11 +37,28 @@ export default function ProfileNavigation({ children }) {
                 </section>
                 <nav className="max-w-6xl mx-auto mt-14 border-b">
                     <ul className="py-5 flex gap-8 font-mont font-semibold">
-                        <li className="text-sm rounded-full text-secondary">
-                            My Post
+                        <li
+                            className={`text-sm rounded-full ${
+                                pathname === "/profile" && "text-secondary"
+                            }`}
+                        >
+                            <Link href="/profile">My Post</Link>
                         </li>
-                        <li className="text-sm rounded-full">Liked Post</li>
-                        <li className="text-sm rounded-full">Edit Profile</li>
+                        <li
+                            className={`text-sm rounded-full ${
+                                pathname === "/picture-liked" &&
+                                "text-secondary"
+                            }`}
+                        >
+                            <Link href="picture-liked">Liked Post</Link>
+                        </li>
+                        <li
+                            className={`text-sm rounded-full ${
+                                pathname === "/profile/edit" && "text-secondary"
+                            }`}
+                        >
+                            <Link href="/profile/edit">Edit Profile</Link>
+                        </li>
                     </ul>
                 </nav>
                 <section className="max-w-6xl mx-auto">{children}</section>
