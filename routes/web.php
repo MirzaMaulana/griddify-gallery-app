@@ -60,4 +60,5 @@ Route::controller(CommentController::class)->middleware('auth')->group(function 
 
 Route::controller(ProfileController::class)->middleware('auth')->group(function () {
     Route::get('/profile', 'index')->name('profile.index');
+    Route::get('/profile/edit', 'edit')->name('profile.edit');
 });

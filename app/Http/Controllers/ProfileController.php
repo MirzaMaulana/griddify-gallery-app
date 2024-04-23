@@ -48,4 +48,8 @@ class ProfileController extends Controller
 
         return redirect()->route('profile.index')->with('success', 'Profile updated successfully.');
     }
+    public function edit()
+    {
+        return inertia('profile/profile-edit');
+    }
 }
