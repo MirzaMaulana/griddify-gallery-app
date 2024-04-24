@@ -84,6 +84,7 @@ const Home = () => {
                                 userId={item.user.name}
                                 id={item.id}
                                 like={item.likes_count}
+                                title={item.title}
                                 views={item.views}
                             />
                         ))}
