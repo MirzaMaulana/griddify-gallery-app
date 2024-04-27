@@ -18,7 +18,6 @@ const Navbar = () => {
                     </Link>
                 </div>
                 <div className="flex-none gap-2 navbar-end">
-                    <ThemeController />
                     {auth ? (
                         <div className="dropdown dropdown-end text-white">
                             <div
