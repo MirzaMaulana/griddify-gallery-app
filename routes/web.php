@@ -41,11 +41,12 @@ Route::controller(PictureLikeController::class)->middleware(['auth'])->group(fun
 Route::resource('/picture', PictureController::class)->middleware(['auth'])->except(['show', 'update', 'edit']);
 Route::get('/picture/{id}', [PictureController::class, 'show'])->name('picture.show');
 Route::get('/picture/{id}/edit', [PictureController::class, 'edit'])->middleware(['auth', 'checkPictureOwner'])->name('picture.edit');
-Route::post('/picture/{id}/update', [PictureController::class, 'update'])->middleware(['auth', 'checkPictureOwner'])->name('picture.update');
+Route::put('/picture/{id}/update', [PictureController::class, 'update'])->middleware(['auth', 'checkPictureOwner'])->name('picture.update');
 
 
 Route::controller(CommentController::class)->middleware('auth')->group(function () {
     Route::post('/comment', 'store')->name('comment.store');
+    Route::post('/reply', 'reply')->name('comment.reply');
 });
 
 Route::controller(ProfileController::class)->middleware('auth')->group(function () {

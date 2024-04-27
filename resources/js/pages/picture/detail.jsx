@@ -6,7 +6,7 @@ import Comment from "../../components/comment";
 import Footer from "../../components/footer";
 
 export default function DetailPicture() {
-    const { picture, comment, more_picture, liked } = usePage().props;
+    const { picture, comment, more_picture, liked, reply } = usePage().props;
     const { data, setData, post, processing } = useForm({
         picture_id: picture.id,
     });
@@ -106,7 +106,11 @@ export default function DetailPicture() {
                         <p className="mt-2">{picture.description}</p>
                     </div>
                     <div>
-                        <Comment pictureId={picture.id} comment={comment} />
+                        <Comment
+                            pictureId={picture.id}
+                            comment={comment}
+                            reply={reply}
+                        />
                     </div>
                 </section>
             </header>
@@ -116,9 +120,11 @@ export default function DetailPicture() {
                     {more_picture.length > 0 ? (
                         more_picture.map((item, index) => (
                             <Card
+                                key={index}
                                 imageUrl={`/storage/images/${item.image}`}
                                 userId={item.user.name}
                                 id={item.id}
+                                title={item.title}
                             />
                         ))
                     ) : (

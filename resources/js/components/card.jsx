@@ -1,7 +1,7 @@
 import { Link } from "@inertiajs/inertia-react";
 
 export default function Card({ imageUrl, userId, like, views, id, title }) {
-    const maxTitleLength = 25; // Set the maximum length of the title
+    const maxTitleLength = 20; // Set the maximum length of the title
 
     const shortenTitle = (title) => {
         if (title.length > maxTitleLength) {
@@ -23,7 +23,7 @@ export default function Card({ imageUrl, userId, like, views, id, title }) {
                     </figure>
                     {/* Konten overlay */}
                     <div className="absolute inset-0 flex items-end bg-gradient-to-b from-transparent to-gray-800 p-4 opacity-0 transition-opacity duration-300 hover:opacity-100">
-                        <h3 className="font-mont font-semibold text-xl text-white">
+                        <h3 className="font-mont font-semibold text-lg text-white">
                             {shortenTitle(title)}
                         </h3>
                     </div>

@@ -34,6 +34,7 @@ class PictureController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'image' => 'required|max:2mb'
         ]);
 
         $image = $request->file('image');
@@ -60,12 +61,13 @@ class PictureController extends Controller
      */
     public function show(string $id)
     {
-        $picture = Picture::with('user')->findOrFail($id); // dapatkan gambar berdasarkan id
-        $comment = Comment::with('user')->where('picture_id', $id)->get();
+        $picture = Picture::with('user')->findOrFail($id); // Dapatkan gambar berdasarkan id
+        $comment = Comment::with('user')->where('picture_id', $id)->where('parent_id', '=', null)->get();
+        $reply = Comment::with('user')->where('picture_id', $id)->whereNotNull('parent_id')->get(); // Perbaikan syntax whereNotNull untuk mendapatkan reply yang memiliki parent_id tidak null
         $more_picture_by_author = Picture::with('user')
-            ->where('user_id', $picture->user_id) // cari gambar lain oleh penulis yang sama
-            ->where('id', '!=', $id) // kecuali gambar saat ini
-            ->take(3) // ambil 5 gambar
+            ->where('user_id', $picture->user_id) // Cari gambar lain oleh penulis yang sama
+            ->where('id', '!=', $id) // Kecuali gambar saat ini
+            ->take(3) // Ambil 3 gambar
             ->get();
 
         $userHasLiked = false; // Inisialisasi variabel untuk menandai apakah pengguna telah menyukai gambar ini
@@ -79,8 +81,9 @@ class PictureController extends Controller
         $picture->views += 1;
         $picture->save();
 
-        return inertia('picture/detail', ['picture' => $picture, 'comment' => $comment, 'more_picture' => $more_picture_by_author, 'liked' => $userHasLiked]);
+        return inertia('picture/detail', ['picture' => $picture, 'comment' => $comment, 'reply' => $reply, 'more_picture' => $more_picture_by_author, 'liked' => $userHasLiked]); // Mengirimkan reply ke view
     }
+
 
     /**
      * Show the form for editing the specified resource.

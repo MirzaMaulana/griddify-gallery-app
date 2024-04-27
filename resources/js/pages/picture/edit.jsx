@@ -33,7 +33,7 @@ export default function Edit() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        put(`/picture/${dataPicture.id}`, {
+        put(`/picture/${dataPicture.id}/update`, {
             onError: (errors) => {
                 setError(errors);
             },

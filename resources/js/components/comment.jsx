@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useForm, usePage } from "@inertiajs/inertia-react";
 
-export default function Comment({ pictureId, comment }) {
+export default function Comment({ pictureId, comment, reply }) {
     const { data, setData, post, processing, errors } = useForm({
         picture_id: pictureId,
         content: "",
+        name: "",
+        parent_id: "",
     });
 
     const { auth } = usePage().props;
@@ -17,11 +19,35 @@ export default function Comment({ pictureId, comment }) {
         setShowSubmit(value.trim() !== "");
     };
 
+    const handleClickModal = ({ name, id }) => {
+        setData({ ...data, name: name, parent_id: id });
+        document.getElementById("my_modal_1").showModal();
+    };
+
+    const handleReplySubmit = (e) => {
+        e.preventDefault();
+        post(`/reply`, {
+            onSuccess: () => {
+                setData({
+                    picture_id: pictureId,
+                    name: "",
+                    parent_id: "",
+                    content: "",
+                });
+            },
+        });
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         post("/comment", {
             onSuccess: () => {
-                setData("content", ""); // Clear input after successful submission
+                setData({
+                    picture_id: pictureId,
+                    name: "",
+                    parent_id: "",
+                    content: "",
+                }); // Clear input after successful submission
                 setShowSubmit(false); // Hide submit button again
             },
         });
@@ -29,24 +55,121 @@ export default function Comment({ pictureId, comment }) {
 
     return (
         <section className="w-full">
+            <dialog id="my_modal_1" className="modal">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg">
+                        Reply{" "}
+                        <span className="text-secondary font-semibold">
+                            {data.name}
+                        </span>
+                    </h3>
+                    <label className="form-control mt-5 w-full">
+                        <span className="text-sm font-semibold mb-2">
+                            Content
+                        </span>
+
+                        <textarea
+                            name="description"
+                            value={data.content}
+                            onChange={(e) =>
+                                setData({ ...data, content: e.target.value })
+                            }
+                            required
+                            className="textarea textarea-secondary"
+                            rows={4}
+                            placeholder="Description post"
+                        ></textarea>
+                    </label>
+                    <div className="modal-action">
+                        <form method="dialog">
+                            {/* if there is a button in form, it will close the modal */}
+                            <button
+                                className="btn"
+                                onClick={() =>
+                                    setData({
+                                        picture_id: pictureId,
+                                        name: "",
+                                        parent_id: "",
+                                        content: "",
+                                    })
+                                }
+                            >
+                                Close
+                            </button>
+                        </form>
+                        <button
+                            disabled={processing}
+                            onClick={handleReplySubmit}
+                            className="btn btn-secondary text-sm font-semibold"
+                        >
+                            Reply
+                        </button>
+                    </div>
+                </div>
+            </dialog>
             <p className="text-lg font-mont font-semibold">Komentar</p>
             <div className="h-96 overflow-auto">
                 {comment.map((item, index) => (
-                    <div className="flex gap-3 mt-4" key={index}>
-                        <img
-                            src="https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg"
-                            className="w-8 h-8 rounded-full"
-                            alt=""
-                        />
-                        <div className="">
-                            <p className="font-mont text-sm">
-                                <span className="font-semibold me-3">
-                                    {item.user.name}
-                                </span>
-                                {item.content}
-                            </p>
+                    <>
+                        <div className="flex gap-3 mt-4" key={index}>
+                            <img
+                                src="https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg"
+                                className="w-8 h-8 rounded-full"
+                                alt=""
+                            />
+                            <div className="">
+                                <p className="font-mont text-sm">
+                                    <span className="font-semibold me-3">
+                                        {item.user.name}
+                                    </span>
+                                    {item.content}
+                                </p>
+                                <p className="text-xs">
+                                    <span className="me-3 text-gray-600">
+                                        {item.created_at}
+                                    </span>
+                                    <button
+                                        onClick={() =>
+                                            handleClickModal({
+                                                name: item.user.name,
+                                                id: item.id,
+                                            })
+                                        }
+                                        className="font-semibold text-primary"
+                                    >
+                                        reply
+                                    </button>
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                        {reply
+                            .filter((reply) => reply.parent_id === item.id)
+                            .map((replyItem, replyIndex) => (
+                                <div
+                                    className="ms-5 flex gap-3 mt-4"
+                                    key={replyIndex}
+                                >
+                                    <img
+                                        src="https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg"
+                                        className="w-8 h-8 rounded-full"
+                                        alt=""
+                                    />
+                                    <div className="">
+                                        <p className="font-mont text-sm">
+                                            <span className="font-semibold me-3">
+                                                {replyItem.user.name}
+                                            </span>
+                                            {replyItem.content}
+                                        </p>
+                                        <p className="text-xs">
+                                            <span className="me-3 text-gray-600">
+                                                {replyItem.created_at}
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                    </>
                 ))}
             </div>
             <form
