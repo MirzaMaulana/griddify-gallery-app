@@ -26,6 +26,7 @@ export default function LikedPicture() {
                                     imageUrl={`/storage/images/${item.picture.image}`}
                                     userId={item.picture.user.name}
                                     id={item.picture.id}
+                                    title={item.picture.title}
                                 />
                             ))}
                         </div>
