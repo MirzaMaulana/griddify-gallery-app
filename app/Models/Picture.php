@@ -18,6 +18,11 @@ class Picture extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function collection()
+    {
+        return $this->belongsTo(Collection::class);
+    }
+
     protected $attributes = [
         'image' => '',
         'views' => '0',
