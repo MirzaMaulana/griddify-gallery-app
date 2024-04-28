@@ -34,7 +34,7 @@ class PictureController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => 'required|max:2mb'
+            'image' => 'required'
         ]);
 
         $image = $request->file('image');
@@ -99,6 +99,7 @@ class PictureController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',

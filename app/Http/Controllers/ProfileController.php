@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Picture;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
@@ -23,8 +22,8 @@ class ProfileController extends Controller
     {
         try {
             $request->validate([
-                'name' => 'required|string|max:255',
-                'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // max 2MB
+                'name' => 'required|string|max:255|min:3',
+                'avatar' => 'nullable|mimes:jpeg,png,jpg,gif|max:2048', // max 2MB
             ]);
 
             $user = Auth::user();
@@ -33,21 +32,27 @@ class ProfileController extends Controller
                 abort(403, 'Unauthorized action.');
             }
 
-            $user->name = $request->name;
+            $avatar = $request->file('avatar');
+            if ($avatar) {
+                // Generate a random name for the avatar file
+                $avatarName = time() . '_' . uniqid() . '.' . $avatar->getClientOriginalExtension();
+                $avatarPath = $avatar->storeAs('public/avatars', $avatarName);
 
-            if ($request->hasFile('avatar')) {
-                // Delete existing avatar if it exists
-                if ($user->avatar) {
-                    Storage::delete('public/avatars/' . $user->avatar);
+                // Delete old avatar
+                $oldAvatarPath = public_path('storage/avatars/' . $user->avatar);
+                if (File::exists($oldAvatarPath)) {
+                    File::delete($oldAvatarPath);
                 }
 
-                $avatar = $request->file('avatar');
-                $avatarName = $user->id . '_' . time() . '.' . $avatar->getClientOriginalExtension();
-                $avatar->store('public/avatars');
-                $user->avatar = $avatarName;
+                $user->update([
+                    'name' => $request->name,
+                    'avatar' => $avatarName, // Store the random name in the database
+                ]);
+            } else {
+                $user->update([
+                    'name' => $request->name,
+                ]);
             }
-
-            $user->save();
 
             return redirect()->back()->with('success', 'Profile updated successfully.');
         } catch (\Exception $e) {
@@ -57,10 +62,5 @@ class ProfileController extends Controller
             // Redirect back with error message
             return redirect()->back()->with('error', 'Error updating profile. Please try again.');
         }
-    }
-
-    public function edit()
-    {
-        return inertia('profile/profile-edit');
     }
 }

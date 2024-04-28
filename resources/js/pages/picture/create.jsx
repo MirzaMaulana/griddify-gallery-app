@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Navbar from "../../components/navbar";
 import { Head, useForm } from "@inertiajs/inertia-react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Create() {
     const [error, setError] = useState("");
@@ -25,9 +27,14 @@ export default function Create() {
         post("/picture", {
             onError: (errors) => {
                 setError(errors);
+                toast.error("Failed to upload picture.");
+            },
+            onSuccess: () => {
+                toast.success("Picture uploaded successfully.");
             },
         });
     };
+
     return (
         <>
             <Head title="Griddify | Upload" />

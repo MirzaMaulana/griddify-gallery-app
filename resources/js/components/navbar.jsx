@@ -2,7 +2,7 @@ import { Link, usePage } from "@inertiajs/inertia-react";
 import React from "react";
 import { Inertia } from "@inertiajs/inertia";
 import ThemeController from "./theme-controller";
-
+import { ToastContainer } from "react-toastify";
 const Navbar = () => {
     const handlerLogout = () => {
         Inertia.post("/logout");
@@ -11,6 +11,8 @@ const Navbar = () => {
 
     return (
         <>
+            {" "}
+            <ToastContainer />
             <nav className="navbar py-5 px-6 font-mont max-w-7xl mx-auto">
                 <div className="flex-1 navbar-start">
                     <Link href="/">

@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { useForm, usePage, Link } from "@inertiajs/inertia-react";
+import { useForm, usePage, Link, Head } from "@inertiajs/inertia-react";
+import { router } from "@inertiajs/react";
 import Navbar from "../../components/navbar";
 import PaddingContainer from "../../components/padding-container";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export default function ProfileNavigation({ children }) {
+export default function ProfileNavigation({ children, errors }) {
     const { user } = usePage().props;
-    const { data, setData, put, processing, errors } = useForm({
+    const { data, setData, processing } = useForm({
         name: user.name || "",
         avatar: user.avatar || "",
     });
@@ -31,17 +34,31 @@ export default function ProfileNavigation({ children }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        put("/profile/update", {
-            onSuccess: () => {
-                document.getElementById("my_modal_1").close();
-                alert("Profile updated successfully.");
+        router.post(
+            "/profile/update",
+            {
+                _method: "put",
+                name: data.name,
+                avatar: data.avatar,
             },
-        });
+            {
+                preserveScroll: true,
+                onSuccess: (res) => {
+                    document.getElementById("my_modal_1").closes();
+                    toast("Success update profile");
+                },
+                onError: (err) => {
+                    console.log(err);
+                },
+            }
+        );
     };
 
     return (
         <>
+            <Head title="Griddify | Profile" />
             <Navbar />
+
             <PaddingContainer>
                 <dialog id="my_modal_1" className="modal">
                     <div className="modal-box p-10 font-mont">
@@ -51,10 +68,10 @@ export default function ProfileNavigation({ children }) {
                                 <img
                                     id="avatar-preview"
                                     src={
-                                        data.avatar
+                                        data.avatar instanceof File
                                             ? URL.createObjectURL(data.avatar)
                                             : user.avatar
-                                            ? user.avatar
+                                            ? `/storage/avatars/${user.avatar}`
                                             : "https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg"
                                     }
                                     alt="avatar"
@@ -124,7 +141,7 @@ export default function ProfileNavigation({ children }) {
                         <img
                             src={`${
                                 user.avatar
-                                    ? user.avatar
+                                    ? `/storage/avatars/${user.avatar}`
                                     : "https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg"
                             }`}
                             className="w-32 h-32 rounded-lg"
