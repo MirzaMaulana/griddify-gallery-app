@@ -41,7 +41,7 @@ class AuthController extends Controller
             $request->validate([
                 'name' => 'required|string|max:250',
                 'email' => 'required|email|max:250|unique:users',
-                'password' => 'required|min:8'
+                'password' => 'required|min:8|confirmed', // Tambahkan validasi konfirmasi password
             ]);
 
             $user = User::create([
@@ -62,6 +62,7 @@ class AuthController extends Controller
             return Redirect::back()->withErrors(['failed' => [$e->getMessage()]]);
         }
     }
+
 
 
     public function logout()

@@ -7,6 +7,7 @@ export default function Register({ errors }) {
         name: "",
         email: "",
         password: "",
+        password_confirmation: "", // Tambahkan field konfirmasi password
     });
 
     const handleSubmit = (e) => {
@@ -99,6 +100,24 @@ export default function Register({ errors }) {
                                 setData("password", e.target.value)
                             }
                             placeholder="Password"
+                            className="mb-4 p-2 input input-bordered w-full font-normal mt-[2px]"
+                            required
+                        />
+                    </label>
+                    <label
+                        htmlFor="password_confirmation"
+                        className="text-sm font-mont font-semibold"
+                    >
+                        Confirm Password
+                        <input
+                            type="password"
+                            name="password_confirmation"
+                            id="password_confirmation"
+                            value={data.password_confirmation}
+                            onChange={(e) =>
+                                setData("password_confirmation", e.target.value)
+                            }
+                            placeholder="Confirm Password"
                             className="mb-4 p-2 input input-bordered w-full font-normal mt-[2px]"
                             required
                         />
