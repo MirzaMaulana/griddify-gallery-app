@@ -3,12 +3,11 @@ import { useForm, usePage, Link, Head } from "@inertiajs/inertia-react";
 import { router } from "@inertiajs/react";
 import Navbar from "../../components/navbar";
 import PaddingContainer from "../../components/padding-container";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export default function ProfileNavigation({ children, errors }) {
     const { user } = usePage().props;
-    const { data, setData, processing } = useForm({
+    const [processing, setProcessing] = useState(false);
+    const { data, setData } = useForm({
         name: user.name || "",
         avatar: user.avatar || "",
     });
@@ -38,17 +37,21 @@ export default function ProfileNavigation({ children, errors }) {
             "/profile/update",
             {
                 _method: "put",
-                name: data.name,
-                avatar: data.avatar,
+                ...data,
             },
             {
-                preserveScroll: true,
-                onSuccess: (res) => {
-                    document.getElementById("my_modal_1").closes();
-                    toast("Success update profile");
+                onProgress: (progress) => {
+                    setProcessing(true);
                 },
-                onError: (err) => {
-                    console.log(err);
+                onSuccess: (page) => {
+                    setProcessing(false);
+                    document.getElementById("my_modal_1").close();
+                    console.log("cihuy");
+                },
+                onError: (errors) => {
+                    setProcessing(false);
+                    console.log("apa");
+                    document.getElementById("my_modal_1").close();
                 },
             }
         );
@@ -58,7 +61,6 @@ export default function ProfileNavigation({ children, errors }) {
         <>
             <Head title="Griddify | Profile" />
             <Navbar />
-
             <PaddingContainer>
                 <dialog id="my_modal_1" className="modal">
                     <div className="modal-box p-10 font-mont">

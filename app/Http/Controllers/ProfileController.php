@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
 
 class ProfileController extends Controller
 {
@@ -23,7 +24,7 @@ class ProfileController extends Controller
         try {
             $request->validate([
                 'name' => 'required|string|max:255|min:3',
-                'avatar' => 'nullable|mimes:jpeg,png,jpg,gif|max:2048', // max 2MB
+                'avatar' => 'nullable|max:2048', // max 2MB
             ]);
 
             $user = Auth::user();
@@ -54,13 +55,14 @@ class ProfileController extends Controller
                 ]);
             }
 
-            return redirect()->back()->with('success', 'Profile updated successfully.');
+
+            return  Inertia::location(route('profile.index'));
         } catch (\Exception $e) {
             // Log the error
             Log::error('Error updating profile: ' . $e->getMessage());
 
             // Redirect back with error message
-            return redirect()->back()->with('error', 'Error updating profile. Please try again.');
+            return  Inertia::location(route('profile.index'));
         }
     }
 }
