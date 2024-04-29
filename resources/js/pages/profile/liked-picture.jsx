@@ -24,9 +24,10 @@ export default function LikedPicture() {
                                 <Card
                                     key={item.picture.id}
                                     imageUrl={`/storage/images/${item.picture.image}`}
-                                    userId={item.picture.user.name}
+                                    userId={item.picture.user}
                                     id={item.picture.id}
                                     title={item.picture.title}
+                                    like={item.picture.likes_count}
                                 />
                             ))}
                         </div>

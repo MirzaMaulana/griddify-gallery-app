@@ -52,7 +52,7 @@ export default function DetailPicture() {
                                 <img
                                     src={`${
                                         picture.user.avatar
-                                            ? picture.user.avatar
+                                            ? `/storage/avatars/${picture.user.avatar}`
                                             : "https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg"
                                     }`}
                                     alt=""
@@ -122,9 +122,11 @@ export default function DetailPicture() {
                             <Card
                                 key={index}
                                 imageUrl={`/storage/images/${item.image}`}
-                                userId={item.user.name}
+                                userId={item.user}
                                 id={item.id}
                                 title={item.title}
+                                like={item.likes}
+                                views={item.views}
                             />
                         ))
                     ) : (

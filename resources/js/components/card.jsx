@@ -35,9 +35,13 @@ export default function Card({ imageUrl, userId, like, views, id, title }) {
                     <img
                         className="w-7 rounded-full"
                         alt="Tailwind CSS Navbar component"
-                        src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                        src={
+                            userId.avatar
+                                ? `/storage/avatars/${userId.avatar}`
+                                : "https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg"
+                        }
                     />
-                    {userId}
+                    {userId.name}
                 </div>
                 <div className="flex gap-2">
                     <span className="flex gap-1 text-sm items-center font-mont">

@@ -81,7 +81,7 @@ const Home = () => {
                             <Card
                                 key={item.id}
                                 imageUrl={`/storage/images/${item.image}`}
-                                userId={item.user.name}
+                                userId={item.user}
                                 id={item.id}
                                 like={item.likes_count}
                                 title={item.title}

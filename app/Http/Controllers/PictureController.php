@@ -64,7 +64,7 @@ class PictureController extends Controller
         $picture = Picture::with('user')->findOrFail($id); // Dapatkan gambar berdasarkan id
         $comment = Comment::with('user')->where('picture_id', $id)->where('parent_id', '=', null)->get();
         $reply = Comment::with('user')->where('picture_id', $id)->whereNotNull('parent_id')->get(); // Perbaikan syntax whereNotNull untuk mendapatkan reply yang memiliki parent_id tidak null
-        $more_picture_by_author = Picture::with('user')
+        $more_picture_by_author = Picture::with('user')->withCount('likes')
             ->where('user_id', $picture->user_id) // Cari gambar lain oleh penulis yang sama
             ->where('id', '!=', $id) // Kecuali gambar saat ini
             ->take(3) // Ambil 3 gambar

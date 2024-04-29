@@ -5,7 +5,7 @@ const Navbar = () => {
     const handlerLogout = () => {
         Inertia.post("/logout");
     };
-    const { auth } = usePage().props;
+    const { auth, user } = usePage().props;
 
     return (
         <>
@@ -26,7 +26,11 @@ const Navbar = () => {
                                 <div className="w-10 rounded-full">
                                     <img
                                         alt="Tailwind CSS Navbar component"
-                                        src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                                        src={
+                                            user.avatar
+                                                ? `/storage/avatars/${user.avatar}`
+                                                : "https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg"
+                                        }
                                     />
                                 </div>
                             </div>
